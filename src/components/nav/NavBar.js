@@ -5,7 +5,7 @@ export const NavBar = () => {
     const navigate = useNavigate()
     return (
         <ul className="navbar">
-            <li className="navbar__item">
+            {/* <li className="navbar__item">
                 Navigation link
             </li>
             <li className="navbar__item">
@@ -13,7 +13,7 @@ export const NavBar = () => {
             </li>
             <li className="navbar__item">
                 Navigation link
-            </li>
+            </li> */}
             {
                 (localStorage.getItem("lu_token") !== null) ?
                     <li className="nav-item">

@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react"
-import { getEvents } from "../../managers/EventManager.js"
+import { getEvents, joinEvent, leaveEvent } from "../../managers/EventManager.js"
 import { useNavigate } from 'react-router-dom'
 
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
     const navigate = useNavigate()
-    useEffect(() => {
+    
+    const loadEvents = () => {
         getEvents().then(data => setEvents(data))
+    }
+
+    useEffect(() => {
+        loadEvents()
     }, [])
 
     return (
@@ -27,6 +32,23 @@ export const EventList = (props) => {
                         <div className="event__game">Game: {event.game.title}</div>
                         <div className="event__date">Event Date: {event.date}</div>
                         <div className="event__time">Event Time; {event.time}</div>
+
+                        {
+                        event.joined ?
+                        <button className="btn btn-2 btn-sep icon-create"
+                            onClick={() => {
+                                leaveEvent(event.id)
+                                    .then(() => loadEvents())
+                                }}
+                                >Leave Event</button>
+                                :
+                                <button className="btn btn-2 btn-sep icon-create"
+                                onClick={() => {
+                                    joinEvent(event.id)
+                                        .then(() => loadEvents())
+                                }}
+                        >Join Event</button>
+                        }
                     </section>
                 })
             }
